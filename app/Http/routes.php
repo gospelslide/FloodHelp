@@ -12,12 +12,20 @@
 */
 
 Route::get('/', function () {
-	View::addExtension('html','blade');
     return view('index');
 });
 
-Route::get('/test', function() {
-	return view('test');
-});
 
-Route::post('/locate', 'LocationController@index');
+/* Help Me section routes */
+Route::get('/locate', 'HelpController@location');
+Route::get('/helpme', 'HelpController@index');
+Route::get('/message', 'HelpController@message');
+Route::post('/details', 'HelpController@details');
+Route::post('/testing', 'HelpController@display');
+Route::get('/test', 'HelpController@test');
+/* Help Me section routes */
+
+
+/*People stuck routes*/
+
+/*People stuck routes*/
