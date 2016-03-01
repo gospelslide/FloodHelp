@@ -49,7 +49,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
+                    <li class="page-scroll">
                         <a href="/locate">Help Me!</a>
                     </li>
                     <li class="page-scroll">
@@ -61,7 +61,7 @@
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="active">
                         <a href="/login">Agency</a>
                     </li>
                 </ul>
@@ -77,47 +77,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Help Me</h2>
-                    <hr class="star-primary">
-                    <br>
-                    <p>Get help for your current location</p>
-                    <br>
-                    <div class="row">
-                            <div class="form-group col-xs-12">
-                                 <form method='GET' action='/helpme'>
-                                    <input type='hidden' id='lat' name='lat'>
-                                    <input type='hidden' id='lng' name='lng'> 
-                                    <button type="submit" class="btn btn-success btn-lg">Find Me</button>
-                                    <br>
-                                    <hr>
-                                </form>
-                            </div>
-                    </div>
-                    <script>
-                        var lt = document.getElementById("lat");
-                        var ln = document.getElementById("lng");
-
-                        window.onload = function(){
-                            getLocation();
-                        }
-
-                        function getLocation() {
-                            if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(showPosition);
-                            } else { 
-                                x.innerHTML = "Geolocation is not supported by this browser.";
-                           }
-                        }
-
-                        function showPosition(position) {
-                            document.getElementById("lat").value = position.coords.latitude;
-                            document.getElementById("lng").value = position.coords.longitude;  
-                        }
-                    </script>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
                     @if (count($errors) > 0)
                     <div class="alert alert-danger">
                         <ul>
@@ -127,39 +86,32 @@
                         </ul>
                     </div>
                     @endif
-                    <h2>Help Someone</h2>
+                    <br>
+                    <h2>Agency Login</h2>
                     <hr class="star-primary">
                     <br>
-                    <p>Get help for entered address</p>
-                    <br>
-                    <form method="POST" action="/message">
+                    <form method="POST" action="/validate">
                         <input name="_token" type="hidden">{!! csrf_field() !!}
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter a name." name="name" required>
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" placeholder="Enter Email" id="email" required data-validation-required-message="Please enter your email address."
+                                name="email">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter a phone number." name="mobile" required>
+                                <label>Password</label>
+                                <input type="password" class="form-control" placeholder="Enter Password" id="password" required data-validation-required-message="Please enter a password." name="password">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Street, Locality, Suburb, City, Pincode</label>
-                                <textarea rows="3" class="form-control" placeholder="Street, Locality, Suburb, City, Pincode" id="message" required data-validation-required-message="Please enter an address" name="address" required></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <br>
                         <div id="success"></div>
+                        <br><br>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Send</button>
+                                <button type="submit" class="btn btn-success btn-lg">Login</button>
                             </div>
                         </div>
                     </form>
@@ -221,6 +173,7 @@
             <i class="fa fa-chevron-up"></i>
         </a>
     </div>
+
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

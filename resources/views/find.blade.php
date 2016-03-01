@@ -28,6 +28,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body id="page-top" class="index">
@@ -49,10 +50,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
+                    <li class="page-scroll">
                         <a href="/locate">Help Me!</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="active">
                         <a href="/find">Find People</a>
                     </li>
                     <li class="page-scroll">
@@ -67,102 +68,53 @@
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Contact Section -->
-    <br>
-    <section id="contact">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <span class="name">Find People</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Help Me</h2>
-                    <hr class="star-primary">
-                    <br>
-                    <p>Get help for your current location</p>
-                    <br>
-                    <div class="row">
-                            <div class="form-group col-xs-12">
-                                 <form method='GET' action='/helpme'>
-                                    <input type='hidden' id='lat' name='lat'>
-                                    <input type='hidden' id='lng' name='lng'> 
-                                    <button type="submit" class="btn btn-success btn-lg">Find Me</button>
-                                    <br>
-                                    <hr>
-                                </form>
-                            </div>
-                    </div>
-                    <script>
-                        var lt = document.getElementById("lat");
-                        var ln = document.getElementById("lng");
-
-                        window.onload = function(){
-                            getLocation();
-                        }
-
-                        function getLocation() {
-                            if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(showPosition);
-                            } else { 
-                                x.innerHTML = "Geolocation is not supported by this browser.";
-                           }
-                        }
-
-                        function showPosition(position) {
-                            document.getElementById("lat").value = position.coords.latitude;
-                            document.getElementById("lng").value = position.coords.longitude;  
-                        }
-                    </script>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th><h3>Name</h3></th>
+                                <th><h3>Mobile</h3></th>
+                                <th><h3>Persons Stuck</h3></th>
+                                <th><h3>Message</h3></th>
+                                <th><h3>Location</h3></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            @foreach($people_stuck as $people)
+                            <tr>
+                                <th>{!! $people->name !!}</th>
+                                <th>{!! $people->mobile !!}</th>
+                                <th>{!! $people->persons !!}</th>
+                                <th>{!! $people->message !!}</th>
+                                <th>{!! $people->latitude . ', ' . $people->longitude !!}</th>
+                            </tr>
                             @endforeach
-                        </ul>
+                            </table>
+                        </div>
                     </div>
-                    @endif
-                    <h2>Help Someone</h2>
-                    <hr class="star-primary">
-                    <br>
-                    <p>Get help for entered address</p>
-                    <br>
-                    <form method="POST" action="/message">
-                        <input name="_token" type="hidden">{!! csrf_field() !!}
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter a name." name="name" required>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter a phone number." name="mobile" required>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Street, Locality, Suburb, City, Pincode</label>
-                                <textarea rows="3" class="form-control" placeholder="Street, Locality, Suburb, City, Pincode" id="message" required data-validation-required-message="Please enter an address" name="address" required></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <br>
-                        <div id="success"></div>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Send</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -214,13 +166,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll visible-xs visible-sm">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
