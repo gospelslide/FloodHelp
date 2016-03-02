@@ -28,6 +28,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body id="page-top" class="index">
@@ -49,72 +50,76 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="page-scroll">
-                        <a href="/locate">Help Me!</a>
+                    <li class="active">
+                        <a href="/agency/home">Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/find">Find People</a>
+                        <a href="add_camp">Add Relief Camp</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/camps">Relief Camps</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="">Donate</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/weather">Weather</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/login">Agency</a>
+                        <a href="/agency/logout">Logout</a>
                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Contact Section -->
     <br>
     <section id="contact">
         <div class="container">
             <div class="row">
+            </div>
+            <div class="row">
                 <div class="col-lg-12 text-center">
-                    @if (count($errors) > 0)
-                    <div class="alert alert-danger">
+                    @if(count($errors) > 0)
+                        <div class="alert alert-success">
                         <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+                            <li>{!! $errors !!}</li>
                         </ul>
                     </div>
                     @endif
-                    <br>
-                    <h2>Agency Login</h2>
+                    <h2>Add New Camp</h2>
+
                     <hr class="star-primary">
                     <br>
-                    <form method="POST" action="/validate">
+                    <p>Add camp helplines and other information</p>
+                    <br>
+                    <form method="POST" action="/relief">
                         <input name="_token" type="hidden">{!! csrf_field() !!}
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Email Address</label>
-                                <input type="email" class="form-control" placeholder="Enter Email" id="email" required data-validation-required-message="Please enter your email address."
-                                name="email">
+                                <label>Name</label>
+                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter a name." name="name" required>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Enter Password" id="password" required data-validation-required-message="Please enter a password." name="password">
+                                <label>Organizer</label>
+                                <input type="text" class="form-control" placeholder="Organizer" id="organizer" required data-validation-required-message="Please enter a Organizer." name="organizer" required>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Helpline Numbers</label>
+                                <input type="tel" class="form-control" placeholder="Helpline Number" id="phone" required data-validation-required-message="Please enter a helpline number." name="mobile" required>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Street, Locality, Suburb, City, Pincode</label>
+                                <textarea rows="3" class="form-control" placeholder="Street, Locality, Suburb, City, Pincode" id="message" required data-validation-required-message="Please enter an address" name="address" required></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
                         <div id="success"></div>
-                        <br><br>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Login</button>
+                                <button type="submit" class="btn btn-success btn-lg">Send</button>
                             </div>
                         </div>
                     </form>
@@ -169,14 +174,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll visible-xs visible-sm">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
-
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

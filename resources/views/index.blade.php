@@ -57,7 +57,10 @@
                         <a href="/find">Find People</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Donate</a>
+                        <a href="/camps">Relief Camps</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="">Donate</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>

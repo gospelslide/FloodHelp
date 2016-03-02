@@ -49,14 +49,17 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
+                    <li class="page-scroll">
                         <a href="/locate">Help Me!</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/find">Find People</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Donate</a>
+                        <a href="/camps">Relief Camps</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="">Donate</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>
@@ -204,6 +207,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
+                    @if(count($errors) > 0)
+                        <div class="alert alert-success">
+                        <ul>
+                            <li>{!! $errors !!}</li>
+                        </ul>
+                    </div>
+                    @endif
                     <h2>Add Information</h2>
                     <p>Provide details so your family and friends can find you.</p>
                     <hr class="star-primary">
