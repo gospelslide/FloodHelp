@@ -53,11 +53,14 @@
                     <li class="page-scroll">
                         <a href="/locate">Help Me!</a>
                     </li>
-                    <li class="active">
+                    <li class="page-scroll">
                         <a href="/find">Find People</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Donate</a>
+                        <a href="/camps">Relief Camps</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="">Donate</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>
@@ -87,6 +90,13 @@
     <!-- About Section -->
     <section>
         <div class="container">
+            @if(count($errors) > 0)
+                <div class="alert alert-success">
+                    <ul>
+                        <li>{!! $errors !!}</li>
+                    </ul>
+                </div>
+            @endif
             <form method="GET" action="/find">
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">

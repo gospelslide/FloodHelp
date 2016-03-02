@@ -10,6 +10,8 @@ use Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+include_once __DIR__ . '/config.php';
+
 class AgencyController extends Controller
 {
     /**
@@ -19,7 +21,12 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::check())
+        {
+            return view('agency');
+        }
+        else
+            return redirect('/login');
     }
 
     public function display()
@@ -39,10 +46,48 @@ class AgencyController extends Controller
             if(!strcmp($agency->password,$password))
             {
                 Auth::loginUsingId($agency->id);
-                return Auth::user();
+                return redirect('/agency_home');
             }   
         }
         return redirect()->back()->withErrors($errors);
+    }
+
+    public function add()
+    {
+        if(Auth::check())
+            return view('add_camp');
+        else
+            return redirect('/login');
+    }
+
+    public function addCamp()
+    {
+        $name = Input::get('name');
+        $organizer = Input::get('organizer');
+        $helplines = Input::get('mobile');
+        $address = Input::get('address');
+
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+        $url .= $address;
+        $url = str_replace(' ', '+', $url);
+        $url = $url . '&' . 'key=' . GEOCODING_KEY;
+
+        $response = file_get_contents($url);
+        $response = json_decode($response, true);
+
+        if(count($response['results']))
+        {   
+            $latitude = $response['results'][0]['geometry']['location']['lat'];
+            $longitude = $response['results'][0]['geometry']['location']['lng'];
+        }
+
+        DB::table('camp')->insert(['name' => $name, 'organizer' => $organizer,
+            'helpline' => $helplines, 'address' => $address, 
+            'latitude' => $latitude, 'longitude' => $longitude]);
+
+        $errors = "Camp information successfully added";
+
+        return view('add_camp')->with('errors', $errors);
     }
 
     public function logout()

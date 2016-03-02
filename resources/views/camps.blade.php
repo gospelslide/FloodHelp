@@ -28,6 +28,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body id="page-top" class="index">
@@ -70,54 +71,51 @@
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Contact Section -->
-    <br>
-    <section id="contact">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <span class="name">Find People</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th><h3>Name</h3></th>
+                                <th><h3>Organizer</h3></th>
+                                <th><h3>Address</h3></th>
+                                <th><h3>Helpline</h3></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            @foreach($camps as $camp)
+                            <tr>
+                                <th>{!! $camp->name !!}</th>
+                                <th>{!! $camp->organizer !!}</th>
+                                <th>{!! $camp->address !!}</th>
+                                <th>{!! $camp->helpline !!}</th>
+                            </tr>
                             @endforeach
-                        </ul>
+                            </table>
+                        </div>
                     </div>
-                    @endif
-                    <br>
-                    <h2>Agency Login</h2>
-                    <hr class="star-primary">
-                    <br>
-                    <form method="POST" action="/validate">
-                        <input name="_token" type="hidden">{!! csrf_field() !!}
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Email Address</label>
-                                <input type="email" class="form-control" placeholder="Enter Email" id="email" required data-validation-required-message="Please enter your email address."
-                                name="email">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Enter Password" id="password" required data-validation-required-message="Please enter a password." name="password">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div id="success"></div>
-                        <br><br>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Login</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -169,14 +167,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll visible-xs visible-sm">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
-
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

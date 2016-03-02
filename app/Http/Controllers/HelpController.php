@@ -106,18 +106,20 @@ class HelpController extends Controller
         $response = file_get_contents($url);
         $police = json_decode($response, true);
 
-        $message = 'Nearby Hospital-';
-        $message .= $hospitals['results'][0]['name'] . ',' . $hospitals['results'][0]['vicinity'];
-        if(strlen($message)<140)
-            sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $message); 
+        $messageHosp = 'Nearby Hospital-';
+        $messageHosp .= $hospitals['results'][0]['name'] . ',' . $hospitals['results'][0]['vicinity'];
 
-        $message = 'Nearby Police Station-';
-        $message .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
+        $messagePol = 'Nearby Police Station-';
+        $messagePol .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
 
-        if(strlen($message)<140)
-            sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $message); 
+        if(strlen($messageHosp)<140)
+            sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $messageHosp); 
 
-        return "Success";
+        if(strlen($messagePol)<140)
+            sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $messagePol); 
+
+        $errors = "Important contact information has been provided to the number";
+        return view('locate')->with('errors', $errors);
     }
 
     public function details()
@@ -144,7 +146,8 @@ class HelpController extends Controller
         DB::table('people_stuck')->insert(['name' => $name,'mobile' => $mobile, 
             'persons' => $no_of_people, 'message' => $message, 'address' => $address, 'latitude' => $latitude,'longitude' => $longitude ]);
 
-        return "Success!";
+        $errors = "Information added successfully!";
+        return redirect('/find');
     }
 
     public function location()
@@ -165,6 +168,9 @@ class HelpController extends Controller
 
             $weather = $weather . $city .$next . WEATHER_KEY;
             $fore = $fore . $city . $next . WEATHER_KEY;
+
+            $weather = str_replace(' ', '+', $weather);
+            $fore = str_replace(' ', '+', $fore);
 
             $json_string=file_get_contents($weather);
             $jsonData = json_decode($json_string, true);
@@ -213,5 +219,11 @@ class HelpController extends Controller
         else
             $people_stuck = DB::table('people_stuck')->get();
         return view('find')->with('people_stuck', $people_stuck);
+    }
+
+    public function camps()
+    {
+        $camps = DB::table('camp')->get();
+        return view('camps')->with('camps', $camps);
     }
 }
