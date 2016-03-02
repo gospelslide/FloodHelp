@@ -87,6 +87,21 @@
     <!-- About Section -->
     <section>
         <div class="container">
+            <form method="GET" action="/find">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="Search By Phone Number" id="phone" required data-validation-required-message="Please enter a phone number." name="mobile" required>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-m" style="float:right;">Find</button>
+                            </div>
+                        </div>
+                    </form>
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="container">
@@ -98,6 +113,7 @@
                                 <th><h3>Mobile</h3></th>
                                 <th><h3>Persons Stuck</h3></th>
                                 <th><h3>Message</h3></th>
+                                <th><h3>Address</h3></th>
                                 <th><h3>Location</h3></th>
                             </tr>
                             </thead>
@@ -109,6 +125,7 @@
                                 <th>{!! $people->mobile !!}</th>
                                 <th>{!! $people->persons !!}</th>
                                 <th>{!! $people->message !!}</th>
+                                <th>{!! $people->address !!}</th>
                                 <th>{!! $people->latitude . ', ' . $people->longitude !!}</th>
                             </tr>
                             @endforeach

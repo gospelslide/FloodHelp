@@ -75,72 +75,71 @@
     <!-- About Section -->
     <br>
     <br>
-    <form method='GET' action='/weather' name="weatherLocation">
-        <input type='hidden' id='lat' name='lat'>
-        <input type='hidden' id='lng' name='lng'> 
-    </form>
-    <script>
-        var lt = document.getElementById("lat");
-        var ln = document.getElementById("lng");
-
-        window.onload = function(){
-            getLocation();
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else { 
-                x.innerHTML = "Geolocation is not supported by this browser.";
-           }
-        }
-
-        function showPosition(position) {
-            document.getElementById("lat").value = position.coords.latitude;
-            document.getElementById("lng").value = position.coords.longitude;  
-            //document.forms['weatherLocation'].submit();
-        }
-    </script>
     <section class="success" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Weather Updates</h2>
                     <hr class="star-light">
-                    <p>Information based on your current location</p>
+                    <?php
+                        if(count($getWeather))
+                            echo "<p>Weather for " . $getWeather['city'] . "</p>";
+                        else
+                            echo "<p>Select City</p>";
+                    ?>
+                    <form action="/weather" method="GET">
+                    <select name="country" class="countries" id="countryId">
+                    <option value="">Select Country</option>
+                    </select>
+                    <select name="state" class="states" id="stateId">
+                    <option value="">Select State</option>
+                    </select>
+                    <select name="city" class="cities" id="cityId">
+                    <option value="">Select City</option>
+                    </select>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                    <script src="http://lab.iamrohit.in/js/location.js"></script>
+                    <button type="submit" class="btn btn-success btn-sm">Get Weather</button>
+                    </form>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                <h3>Current</h3>
                     <?php
-                        echo "<p>Current Temperature:".$getWeather[0][1]."&#8451;<br />";
-                        echo "Min. Temperature:".$getWeather[0][2]."&#8451;<br />";
-                        echo "Max. Temperature:".$getWeather[0][3]."&#8451;<br />";
-                        echo "Humidity:".$getWeather[0][4]."%<br />";
-                        echo "Weather:".$getWeather[0][0]."<br />";
-                        echo "Updated At:".$getWeather[0][5]."<br /></p>";
-                        echo "<hr>";
+                        if(count($getWeather))
+                        {
+                            echo "<h3>Current</h3>";
+                            echo "<p>Current Temperature:".$getWeather[0][1]."&#8451;<br />";
+                            echo "Min. Temperature:".$getWeather[0][2]."&#8451;<br />";
+                            echo "Max. Temperature:".$getWeather[0][3]."&#8451;<br />";
+                            echo "Humidity:".$getWeather[0][4]."%<br />";
+                            echo "Weather:".$getWeather[0][0]."<br />";
+                            echo "Updated At:".$getWeather[0][5]."<br /></p>";
+                            echo "<hr>";
+                        }
                     ?>
                 </div>
                 <div class="col-lg-4">
-                    <h3> Forecast</h3>
                     <?php
-                        $counter=0;
-                        foreach($getWeather[1] as $key=>$value)
-                        { 
-                            if($counter==0)
-                            {
-                                $counter++;
-                                continue;
+                        if(count($getWeather))
+                        {
+                            echo "<h3>Forecast</h3>";
+                            $counter=0;
+                            foreach($getWeather[1] as $key=>$value)
+                            { 
+                                if($counter<2)
+                                {
+                                    $counter++;
+                                    continue;
+                                }
+                                echo "<p>Current Temperature:".$value[0]."&#8451;<br />";
+                                echo "Min. Temperature:".$value[1]."&#8451;<br />";
+                                echo "Max. Temperature:".$value[2]."&#8451;<br />";
+                                echo "Humidity:".$value[3]."%<br />";
+                                echo "Weather:".$value[4]."<br />";
+                                echo "Time:".$value[5]."<br /></p>";
+                                echo "<hr>";
                             }
-                            echo "<p>Current Temperature:".$value[0]."&#8451;<br />";
-                            echo "Min. Temperature:".$value[1]."&#8451;<br />";
-                            echo "Max. Temperature:".$value[2]."&#8451;<br />";
-                            echo "Humidity:".$value[3]."%<br />";
-                            echo "Weather:".$value[4]."<br />";
-                            echo "Time:".$value[5]."<br /></p>";
-                            echo "<hr>";
                         }
                     ?>
                 </div>
