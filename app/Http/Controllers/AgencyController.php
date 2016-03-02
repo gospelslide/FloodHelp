@@ -55,10 +55,7 @@ class AgencyController extends Controller
     public function add()
     {
         if(Auth::check())
-        {
-            $camps = DB::table('camp')->get();
-            return view('add_camp')->with('add_camp', $camps);
-        }
+            return view('add_camp');
         else
             return redirect('/login');
     }
