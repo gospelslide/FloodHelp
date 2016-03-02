@@ -19,10 +19,15 @@ Route::get('/', function () {
 /* Help Me section routes */
 Route::get('/locate', 'HelpController@location');
 Route::get('/helpme', 'HelpController@index');
-Route::get('/message', 'HelpController@message');
+Route::post('/message', 'HelpController@message');
 Route::post('/details', 'HelpController@details');
-Route::post('/testing', 'HelpController@display');
-Route::get('/test', 'HelpController@test');
+Route::get('/find', 'HelpController@find');
+Route::get('/weather', 'HelpController@weather');
+
+Route::get('/login', 'AgencyController@display');
+Route::post('/validate', 'AgencyController@validation');
+Route::get('/agency/home', 'AgencyController@index');
+Route::get('/agency/logout', 'AgencyController@logout');
 /* Help Me section routes */
 
 

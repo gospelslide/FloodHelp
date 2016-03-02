@@ -61,42 +61,6 @@ class HelpController extends Controller
         $contact['latitude'] = $latitude;
         $contact['longitude'] = $longitude;
 
-        //Weather updates
-        $getWeather=array();
-        $json_string=file_get_contents("http://api.openweathermap.org/data/2.5/weather?lat=" . $latitude . "&lon=" . $longitude . "&units=metric&lang=de&mode=json&APPID=9d10e5fc866fde56747f225d82050f55");
-        $jsonData = json_decode($json_string, true);
-        date_default_timezone_set("Asia/Calcutta");
-        $forecast[0]=$jsonData['weather']['0']['main'];
-        $forecast[1]=$jsonData['main']['temp'];
-        $forecast[2]=$jsonData['main']['temp_min'];
-        $forecast[3]=$jsonData['main']['temp_max'];
-        $forecast[4]=$jsonData['main']['humidity'];
-        $forecast[5]=date("Y/m/d")." ".date("H:i:s");
-        $getWeather[0]=$forecast;
-        //FORECAST
-        $json_string = file_get_contents("http://api.openweathermap.org/data/2.5/forecast?lat=18.975&lon=72.8258&units=metric&lang=de&mode=json&APPID=9d10e5fc866fde56747f225d82050f55");
-        $jsonData = json_decode($json_string, true);
-        $forecast=array();
-        $forecast=array();
-        $counter=0;
-        foreach ($jsonData['list'] AS $item) {
-        $forecast[0]=$item['main']['temp'];
-        $forecast[1]=$item['main']['temp_min'];
-        $forecast[2]=$item['main']['temp_max'];
-        $forecast[3]=$item['main']['humidity'];
-        if($item['rain']==null)
-            $forecast[4]='-';
-        else
-            $forecast[4]=$item['rain']['3h'];
-        $forecast[5]=$item['dt_txt'];
-        $forecast_all[]=$forecast;
-        $counter++;
-        if($counter==3)
-        break;
-        }
-        $getWeather[1]=$forecast_all;
-        $contact['getWeather'] = $getWeather;
-
         return view('helpme')->with('contact', $contact);
     }
 
@@ -120,6 +84,10 @@ class HelpController extends Controller
             $latitude = $response['results'][0]['geometry']['location']['lat'];
             $longitude = $response['results'][0]['geometry']['location']['lng'];
         }
+
+        DB::table('people_stuck')->insert(['name' => $name,'mobile' => $mobile,
+            'address' => $address,
+            'latitude' => $latitude,'longitude' => $longitude ]);
 
         $radius = 1000;
 
@@ -148,6 +116,8 @@ class HelpController extends Controller
 
         if(strlen($message)<140)
             sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $message); 
+
+        return "Success";
     }
 
     public function details()
@@ -159,8 +129,20 @@ class HelpController extends Controller
         $latitude = Input::get('lat');
         $longitude = Input::get('lng');
 
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+        $url = $url . $latitude . ',' . $longitude . '&key=' . GEOCODING_KEY;
+
+        $response = file_get_contents($url);
+        $response = json_decode($response, true); 
+
+        $address = $response['results'][0]['address_components'][0]['long_name'] . ','
+                    . $response['results'][0]['address_components'][1]['long_name'] . ','
+                    . $response['results'][0]['address_components'][2]['long_name'] . ','
+                    . $response['results'][0]['address_components'][3]['long_name'] . ','
+                    . $response['results'][0]['address_components'][4]['long_name'];
+           
         DB::table('people_stuck')->insert(['name' => $name,'mobile' => $mobile, 
-            'persons' => $no_of_people, 'message' => $message, 'latitude' => $latitude,'longitude' => $longitude ]);
+            'persons' => $no_of_people, 'message' => $message, 'address' => $address, 'latitude' => $latitude,'longitude' => $longitude ]);
 
         return "Success!";
     }
@@ -172,36 +154,64 @@ class HelpController extends Controller
 
     public function weather()
     {
+        $weather = "http://api.openweathermap.org/data/2.5/weather?q=";
+        $fore = "http://api.openweathermap.org/data/2.5/forecast?q=";
+        $next = "&units=metric&lang=de&mode=json&APPID=";
         $getWeather=array();
-        $json_string=file_get_contents("http://api.openweathermap.org/data/2.5/weather?lat=18.975&lon=72.8258&units=metric&lang=de&mode=json&APPID=9d10e5fc866fde56747f225d82050f55");
-        $jsonData = json_decode($json_string, true);
-        date_default_timezone_set("Asia/Calcutta");
-        $forecast[0]=$jsonData['weather']['0']['main'];
-        $forecast[1]=$jsonData['main']['temp'];
-        $forecast[2]=$jsonData['main']['temp_min'];
-        $forecast[3]=$jsonData['main']['temp_max'];
-        $forecast[4]=$jsonData['main']['humidity'];
-        $forecast[5]=date("Y/m/d")." ".date("H:i:s");
-        $getWeather[0]=$forecast;
-        //FORECAST
-        $json_string = file_get_contents("http://api.openweathermap.org/data/2.5/forecast?lat=18.975&lon=72.8258&units=metric&lang=de&mode=json&APPID=9d10e5fc866fde56747f225d82050f55");
-        $jsonData = json_decode($json_string, true);
-        $forecast=array();
-        $forecast=array();
-        $counter=0;
-        foreach ($jsonData['list'] AS $item) {
-        $forecast[0]=$item['main']['temp'];
-        $forecast[1]=$item['main']['temp_min'];
-        $forecast[2]=$item['main']['temp_max'];
-        $forecast[3]=$item['main']['humidity'];
-        $forecast[4]=$item['rain'];
-        $forecast[5]=$item['dt_txt'];
-        $forecast_all[]=$forecast;
-        $counter++;
-        if($counter==3)
-        break;
+
+        if(!is_null(Input::get('city')))
+        {
+            $city = Input::get('city');
+
+            $weather = $weather . $city .$next . WEATHER_KEY;
+            $fore = $fore . $city . $next . WEATHER_KEY;
+
+            $json_string=file_get_contents($weather);
+            $jsonData = json_decode($json_string, true);
+            date_default_timezone_set("Asia/Calcutta");
+            $forecast[0]=$jsonData['weather']['0']['main'];
+            $forecast[1]=$jsonData['main']['temp'];
+            $forecast[2]=$jsonData['main']['temp_min'];
+            $forecast[3]=$jsonData['main']['temp_max'];
+            $forecast[4]=$jsonData['main']['humidity'];
+            $forecast[5]=date("Y/m/d")." ".date("H:i:s");
+            $getWeather[0]=$forecast;
+            //FORECAST
+            $json_string = file_get_contents($fore);
+            $jsonData = json_decode($json_string, true);
+            $forecast=array();
+            $forecast=array();
+            $counter=0;
+            foreach ($jsonData['list'] AS $item) {
+            $forecast[0]=$item['main']['temp'];
+            $forecast[1]=$item['main']['temp_min'];
+            $forecast[2]=$item['main']['temp_max'];
+            $forecast[3]=$item['main']['humidity'];
+            $forecast[4]=$item['weather'][0]['main'];
+            $forecast[5]=$item['dt_txt'];
+            $forecast_all[]=$forecast;
+            $counter++;
+            if($counter==4)
+            break;
+            }
+            $getWeather[1]=$forecast_all;
+            $getWeather['city'] = $city;
+
         }
-        $getWeather[1]=$forecast_all;
-        return view('testing')->with('getWeather',$getWeather);
+
+        return view('weather')->with('getWeather',$getWeather);
+    }
+
+    public function find()
+    {
+        if(!is_null(Input::get('mobile')))
+        {
+            $mobile = Input::get('mobile');
+            $people_stuck = DB::table('people_stuck')
+            ->where('mobile', $mobile)->get();
+        }
+        else
+            $people_stuck = DB::table('people_stuck')->get();
+        return view('find')->with('people_stuck', $people_stuck);
     }
 }

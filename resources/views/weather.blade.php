@@ -28,6 +28,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body id="page-top" class="index">
@@ -49,7 +50,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
+                    <li class="page-scroll">
                         <a href="/locate">Help Me!</a>
                     </li>
                     <li class="page-scroll">
@@ -58,7 +59,7 @@
                     <li class="page-scroll">
                         <a href="#contact">Donate</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="active">
                         <a href="/weather">Weather</a>
                     </li>
                     <li class="page-scroll">
@@ -71,103 +72,80 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Contact Section -->
+    <!-- About Section -->
     <br>
-    <section id="contact">
+    <br>
+    <section class="success" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Help Me</h2>
-                    <hr class="star-primary">
-                    <br>
-                    <p>Get help for your current location</p>
-                    <br>
-                    <div class="row">
-                            <div class="form-group col-xs-12">
-                                 <form method='GET' action='/helpme'>
-                                    <input type='hidden' id='lat' name='lat'>
-                                    <input type='hidden' id='lng' name='lng'> 
-                                    <button type="submit" class="btn btn-success btn-lg">Find Me</button>
-                                    <br>
-                                    <hr>
-                                </form>
-                            </div>
-                    </div>
-                    <script>
-                        var lt = document.getElementById("lat");
-                        var ln = document.getElementById("lng");
-
-                        window.onload = function(){
-                            getLocation();
-                        }
-
-                        function getLocation() {
-                            if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(showPosition);
-                            } else { 
-                                x.innerHTML = "Geolocation is not supported by this browser.";
-                           }
-                        }
-
-                        function showPosition(position) {
-                            document.getElementById("lat").value = position.coords.latitude;
-                            document.getElementById("lng").value = position.coords.longitude;  
-                        }
-                    </script>
+                    <h2>Weather Updates</h2>
+                    <hr class="star-light">
+                    <?php
+                        if(count($getWeather))
+                            echo "<p>Weather for " . $getWeather['city'] . "</p>";
+                        else
+                            echo "<p>Select City</p>";
+                    ?>
+                    <form action="/weather" method="GET">
+                    <select name="country" class="countries" id="countryId">
+                    <option value="">Select Country</option>
+                    </select>
+                    <select name="state" class="states" id="stateId">
+                    <option value="">Select State</option>
+                    </select>
+                    <select name="city" class="cities" id="cityId">
+                    <option value="">Select City</option>
+                    </select>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                    <script src="http://lab.iamrohit.in/js/location.js"></script>
+                    <button type="submit" class="btn btn-success btn-sm">Get Weather</button>
+                    </form>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 text-center">
-                    @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    <h2>Help Someone</h2>
-                    <hr class="star-primary">
-                    <br>
-                    <p>Get help for entered address</p>
-                    <br>
-                    <form method="POST" action="/message">
-                        <input name="_token" type="hidden">{!! csrf_field() !!}
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter a name." name="name" required>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter a phone number." name="mobile" required>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Street, Locality, Suburb, City, Pincode</label>
-                                <textarea rows="3" class="form-control" placeholder="Street, Locality, Suburb, City, Pincode" id="message" required data-validation-required-message="Please enter an address" name="address" required></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <br>
-                        <div id="success"></div>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Send</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-lg-4 col-lg-offset-2">
+                    <?php
+                        if(count($getWeather))
+                        {
+                            echo "<h3>Current</h3>";
+                            echo "<p>Current Temperature:".$getWeather[0][1]."&#8451;<br />";
+                            echo "Min. Temperature:".$getWeather[0][2]."&#8451;<br />";
+                            echo "Max. Temperature:".$getWeather[0][3]."&#8451;<br />";
+                            echo "Humidity:".$getWeather[0][4]."%<br />";
+                            echo "Weather:".$getWeather[0][0]."<br />";
+                            echo "Updated At:".$getWeather[0][5]."<br /></p>";
+                            echo "<hr>";
+                        }
+                    ?>
+                </div>
+                <div class="col-lg-4">
+                    <?php
+                        if(count($getWeather))
+                        {
+                            echo "<h3>Forecast</h3>";
+                            $counter=0;
+                            foreach($getWeather[1] as $key=>$value)
+                            { 
+                                if($counter<2)
+                                {
+                                    $counter++;
+                                    continue;
+                                }
+                                echo "<p>Current Temperature:".$value[0]."&#8451;<br />";
+                                echo "Min. Temperature:".$value[1]."&#8451;<br />";
+                                echo "Max. Temperature:".$value[2]."&#8451;<br />";
+                                echo "Humidity:".$value[3]."%<br />";
+                                echo "Weather:".$value[4]."<br />";
+                                echo "Time:".$value[5]."<br /></p>";
+                                echo "<hr>";
+                            }
+                        }
+                    ?>
                 </div>
             </div>
         </div>
     </section>
-
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -214,13 +192,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll visible-xs visible-sm">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

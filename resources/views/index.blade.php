@@ -50,17 +50,20 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/">Home</a>
-                    </li>
                     <li class="page-scroll">
                         <a href="/locate">Help Me!</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Provide Help</a>
+                        <a href="/find">Find People</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Donate</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/weather">Weather</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/login">Agency</a>
                     </li>
                 </ul>
             </div>
