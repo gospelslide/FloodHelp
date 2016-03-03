@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Mail;
 use Input;
 use DB;
 use App\Http\Requests;
@@ -13,6 +14,12 @@ include_once __DIR__ . '/config.php';
 
 class HelpController extends Controller
 {
+
+    public function home()
+    {
+        $alerts = DB::table('alerts')->get();
+        return view('index')->with('alerts', $alerts);
+    }
 
     /**
      * Display a listing of the resource.
@@ -99,68 +106,77 @@ class HelpController extends Controller
         {   
             $latitude = $response['results'][0]['geometry']['location']['lat'];
             $longitude = $response['results'][0]['geometry']['location']['lng'];
-        }
 
-        $min = 10000;
-        $camps = DB::table('camp')->get();
-        foreach($camps as $camp)
-        {
-            $clat = $camp->latitude;
-            $clng = $camp->longitude;
-
-            $dist = $this->distance($clat, $clng, $latitude, $longitude);
-            if($dist<$min)
+            $min = 10000;
+            $camps = DB::table('camp')->get();
+            foreach($camps as $camp)
             {
-                $min = $dist;
-                $nearest = $camp;
+                $clat = $camp->latitude;
+                $clng = $camp->longitude;
+
+                $dist = $this->distance($clat, $clng, $latitude, $longitude);
+                if($dist<$min)
+                {
+                    $min = $dist;
+                    $nearest = $camp;
+                }
             }
+
+            $messageCamp = "Nearby Relief Camp-";
+            $messageCamp .=  $nearest->name . ',' . $nearest->address . ', Helpline-' . 
+                $nearest->helpline;
+
+            //Nearest camp
+            DB::table('people_stuck')->insert(['name' => $name,'mobile' => $mobile,
+                'address' => $address,
+                'latitude' => $latitude,'longitude' => $longitude ]);
+
+            if(strlen($messageCamp)<140)
+                sendWay2SMS(SMS_NO, SMS_PASS, $mobile, $messageCamp);
+
+            $radius = 1000;
+
+            $gen = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=';
+            $gen = $gen . $latitude . ',' . $longitude . '&radius=' . $radius;
+
+            //Nearest hospitals
+            $url = $gen . '&type=hospital' . '&key=' . PLACES_KEY;
+
+            $response = file_get_contents($url);
+            $hospitals = json_decode($response, true);
+
+            if(count($hospitals['results']))
+            {
+                $messageHosp = 'Nearby Hospital-';
+                $messageHosp .= $hospitals['results'][0]['name'] . ',' . $hospitals['results'][0]['vicinity'];
+
+                if(strlen($messageHosp)<140)
+                    sendWay2SMS (SMS_NO, SMS_PASS, $mobile, $messageHosp); 
+            }
+
+            //Nearest police stations
+            $url = $gen . '&type=police' . '&key=' . PLACES_KEY;
+
+            $response = file_get_contents($url);
+            $police = json_decode($response, true);
+
+            if(count($police['results']))
+            {
+                $messagePol = 'Nearby Police Station-';
+                $messagePol .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
+
+                if(strlen($messagePol)<140)
+                    sendWay2SMS (SMS_NO, SMS_PASS, $mobile, $messagePol); 
+            }
+
+            $errors = "Important contact information has been provided to the number";
+            return view('locate')->with('errors', $errors);
         }
-
-        $messageCamp = "Nearby Relief Camp-";
-        $messageCamp .=  $camp->name . ',' . $camp->address . ', Helpline-' . 
-            $camp->helpline;
-
-        DB::table('people_stuck')->insert(['name' => $name,'mobile' => $mobile,
-            'address' => $address,
-            'latitude' => $latitude,'longitude' => $longitude ]);
-
-        if(strlen($messageCamp)<140)
-            sendWay2SMS( SMS_NO, SMS_PASS, $mobile, $messageCamp);
-
-        $radius = 1000;
-
-        $gen = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=';
-        $gen = $gen . $latitude . ',' . $longitude . '&radius=' . $radius;
-
-        //Nearest hospitals
-        $url = $gen . '&type=hospital' . '&key=' . PLACES_KEY;
-
-        $response = file_get_contents($url);
-        $hospitals = json_decode($response, true);
-
-        //Nearest police stations
-        $url = $gen . '&type=police' . '&key=' . PLACES_KEY;
-
-        $response = file_get_contents($url);
-        $police = json_decode($response, true);
-
-        $messageHosp = 'Nearby Hospital-';
-        $messageHosp .= $hospitals['results'][0]['name'] . ',' . $hospitals['results'][0]['vicinity'];
-
-        if(strlen($messageHosp)<140)
-            sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $messageHosp); 
-
-        $messagePol = 'Nearby Police Station-';
-        $messagePol .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
-
-        if(strlen($messagePol)<140)
-            sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $messagePol); 
-
-        //Nearest camp
-
-
-        $errors = "Important contact information has been provided to the number";
-        return view('locate')->with('errors', $errors);
+        else
+        {
+            $errors = "Please enter the address in the given format!";
+            return view('locate')->with('errors', $errors);
+        }
     }
 
     public function details()
@@ -260,6 +276,27 @@ class HelpController extends Controller
         else
             $people_stuck = DB::table('people_stuck')->get();
         return view('find')->with('people_stuck', $people_stuck);
+    }
+
+    public function submit()
+    {
+        $name = Input::get('name');
+        $email = Input::get('email');
+        $items = Input::get('item');
+
+        DB::table('donation')->insert(['name' => $name, 'email' => $email,
+            'item' => $items]);
+
+        $data['name'] = $name;
+        $data['items'] = $items;
+
+        Mail::send('donation_email', ['data' => $data], function ($message) use ($email)
+        {
+            $message->to($email);
+        });
+
+        $errors = "We have recieved your donation request,check your email for details";
+        return view('donate')->with('errors', $errors);
     }
 
     public function camps()

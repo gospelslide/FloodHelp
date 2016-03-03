@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'HelpController@home');
 
 
 /* Help Me section routes */
@@ -25,6 +23,7 @@ Route::get('/find', 'HelpController@find');
 Route::get('/weather', 'HelpController@weather');
 Route::get('/camps', 'HelpController@camps');
 Route::get('/donate', 'HelpController@donate');
+Route::post('/submit', 'HelpController@submit');
 
 Route::get('/login', 'AgencyController@display');
 Route::post('/validate', 'AgencyController@validation');
