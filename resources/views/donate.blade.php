@@ -44,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">FloodRelief</a>
+                <a class="navbar-brand" href="/">FloodRelief</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -76,36 +76,57 @@
     </nav>
 
     <!-- Section -->
-    <section id="about">
+    <br>
+    <section id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <br>
-                    <h2>Choose Donation</h2>
+                    @if(count($errors) > 0)
+                        <div class="alert alert-success">
+                        <ul>
+                            <li>{!! $errors !!}</li>
+                        </ul>
+                    </div>
+                    @endif
+                    <h2>Donate Food or Clothing</h2>
                     <hr class="star-primary">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" onclick="window.location.href='/'" class="btn btn-success btn-lg" style="float:center;">Donate Food</button>
+                    <br>
+                    <form method="POST" action="/submit">
+                        <input name="_token" type="hidden">{!! csrf_field() !!}
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Name</label>
+                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter a name." name="name" required>
+                                <p class="help-block text-danger"></p>
                             </div>
                         </div>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" onclick="window.location.href='/'" class="btn btn-success btn-lg" style="float:right;">Donate Money</button>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address." name="email">
+                                <p class="help-block text-danger"></p>
                             </div>
                         </div>
-                    </p>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Food or Clothing Items</label>
+                                <input type="text" class="form-control" placeholder="Food or Clothing Items" id="name" required data-validation-required-message="Please enter food or clothing item." name="item" required>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Send</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
     </section>
+
 
         <!-- Footer -->
     <footer class="text-center">
