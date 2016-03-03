@@ -44,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">FloodRelief</a>
+                <a class="navbar-brand" href="#page-top">FloodRelief</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +59,7 @@
                     <li class="page-scroll">
                         <a href="/camps">Relief Camps</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="active">
                         <a href="/donate">Donate</a>
                     </li>
                     <li class="page-scroll">
@@ -71,57 +71,43 @@
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
+        </div>
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="intro-text">
-                        <span class="name">Relief Camps</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- About Section -->
-    <section>
+    <!-- Section -->
+    <section id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <div class="container">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
-                            <thead>
-                            <tr>
-                                <th><h3>Name</h3></th>
-                                <th><h3>Organizer</h3></th>
-                                <th><h3>Address</h3></th>
-                                <th><h3>Helpline</h3></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            @foreach($camps as $camp)
-                            <tr>
-                                <th>{!! $camp->name !!}</th>
-                                <th>{!! $camp->organizer !!}</th>
-                                <th>{!! $camp->address !!}</th>
-                                <th>{!! $camp->helpline !!}</th>
-                            </tr>
-                            @endforeach
-                            </table>
-                        </div>
-                    </div>
+                    <br>
+                    <h2>Choose Donation</h2>
+                    <hr class="star-primary">
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" onclick="window.location.href='/'" class="btn btn-success btn-lg" style="float:center;">Donate Food</button>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" onclick="window.location.href='/'" class="btn btn-success btn-lg" style="float:right;">Donate Money</button>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
     </section>
 
-    <!-- Footer -->
+        <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
             <div class="container">
@@ -168,7 +154,8 @@
         </div>
     </footer>
 
-    <!-- jQuery -->
+
+        <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -186,6 +173,6 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/freelancer.js"></script>
 
-</body>
 
+</body>
 </html>

@@ -54,7 +54,10 @@
                         <a href="/agency/home">Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="add_camp">Add Relief Camp</a>
+                        <a href="/add_camp">Add Relief Camp</a>
+                    </li>
+                     <li class="page-scroll">
+                        <a href="/alerts">Add Alerts</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/agency/logout">Logout</a>

@@ -28,6 +28,41 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script>
+    function initialize() {
+      var i;
+      var data = <?php echo json_encode($contact['camps']); ?>;
+      var userLat = <?php echo $contact['latitude']; ?>;
+      var userLng = <?php echo $contact['longitude']; ?>;
+
+      var mapProp1 = {
+        center:new google.maps.LatLng(userLat,userLng),
+        zoom:8,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
+      var map=new google.maps.Map(document.getElementById("googleMap"), mapProp1);
+
+      var myLatLng = {lat: userLat, lng: userLng};
+       var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+        title: 'You are here'});
+
+      for(i=0;i<data.length;i++)
+      { 
+       var myLatLng = {lat: data[i]['latitude'], lng: data[i]['longitude']};
+       var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: data[i]['name']+'-'+data[i]['address']
+      });
+      }
+      }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
 </head>
 
 <body id="page-top" class="index">
@@ -59,7 +94,7 @@
                         <a href="/camps">Relief Camps</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="">Donate</a>
+                        <a href="/donate">Donate</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>
@@ -182,21 +217,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>About</h2>
+                    <h2>Relief Centres</h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                    <div id="googleMap" style="width:90vw;height:50vh;align:center"></div>       
+                    </div>
                 </div>
             </div>
         </div>
