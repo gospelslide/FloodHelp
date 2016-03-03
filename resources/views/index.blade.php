@@ -91,11 +91,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="img/flood.png" alt="">
+                    <img class="img-responsive" src="img/rescue.jpg" alt="">
                     <div class="intro-text">
-                        <span class="name">Start Bootstrap</span>
+                        <span class="name">FloodRelief</span>
                         <hr class="star-light">
-                        <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
+                        <span class="skills">A website to relief and rehabilitate flood victims.</span>
                     </div>
                 </div>
             </div>
@@ -204,7 +204,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Contact Me</h2>
+                    <h2>Contact Us</h2>
                     <hr class="star-primary">
                 </div>
             </div>
@@ -261,7 +261,7 @@
                 <div class="row">
                     <div class="footer-col col-md-4">
                         <h3>Location</h3>
-                        <p>Dwarkadas.J.Sanghvi College of Engineering<br>Vile Parle(W)-400 056</p>
+                        <p>Dwarkadas.J.Sanghvi College of Engineering, nVile Parle(W)-400 056</p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Around the Web</h3>
@@ -285,7 +285,7 @@
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>About Us</h3>
-                        <p>We are non profit organization helping the community at the time of disasters    .</p>
+                        <p>We are non profit organization helping the community at the time of disasters.</p>
                     </div>
                 </div>
             </div>
@@ -294,7 +294,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Developed by : UnhollyAlliance,2016
+                        Developed by : UnholyAlliance,2016
                     </div>
                 </div>
             </div>
@@ -324,7 +324,7 @@
                             <h1>Survival Tips</h1>
                             <hr class="star-primary">
 
-                            <h3>Survival Tips for During a Flooding Event</h3>
+                            <h3>Survival Tips During a Flooding Event</h3>
                             <ul>
                                 <li>
                                     <p>Listen to radio, television, or Internet news reports for information of weather that could result in flooding.</p>
@@ -355,7 +355,7 @@
                                 </li>
 
                             </ul>   
-                            <h3>Survival Tips for After a Flooding Event</h3>
+                            <h3>Survival Tips After a Flooding Event</h3>
                             <ul>
                                 <li>
                                     <p>Only return home or to your place of business when authorities have stated it is safe to do so.</p>
@@ -456,25 +456,10 @@
                         <div class="modal-body">
                             <h2>Help Others</h2>
                             <hr class="star-primary">
-                                <ol>
-                                    <li>
                                         <h4>Find Out where the flood occured</h4>
                                         <p>Chances are you already have a specific flood trajectory in-mind, but if you don't or aren't abreast with smaller-scaled floods happening throughout the world, the first step is to find out which regions have suffered floods and need help. Depending on where the flood occurred, different humanitarian organizations will be involved in coordinating relief efforts.  Visit the organization's website or call to find out what kind of aid they are providing and how you can best get involved.</p>
-                                    </li>
-                                    <li>
                                         <h4>Stay informed and up-to-date over time.</h4><p>As the needs change, so will the ways you can help -- some ways might be more inline with your abilities or resources over others.</p>
-                                    </li>   
-                                    <li>
-                                        <h4>Decide how would you like to help!</h4><p>There are several ways to get involved.Some are:</p>
-                                        <ul>
-                                            <li><p>Make Monetary Donation</p></li>
-                                            <li><p>Do Blood Donation</p></li>
-                                            <li><p>Do Food Donation</p></li>
-                                            <li><p>Volunteer with some Organization</p></li>
-                                            <li><p>Help in Rehabilitation</li>
-                                        </ul>
-                                    </li>
-                                </ol>
+                                        <h4>Decide how would you like to help!</h4><p>There are several ways to get involved.Some are making monetary donations,blood donations,food donations,volunteer with NGOs or help in rehabilitation.</p>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>

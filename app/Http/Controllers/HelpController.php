@@ -104,6 +104,7 @@ class HelpController extends Controller
 
         if(count($response['results']))
         {   
+
             $latitude = $response['results'][0]['geometry']['location']['lat'];
             $longitude = $response['results'][0]['geometry']['location']['lng'];
 
@@ -162,6 +163,7 @@ class HelpController extends Controller
 
             if(count($police['results']))
             {
+
                 $messagePol = 'Nearby Police Station-';
                 $messagePol .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
 

@@ -24,7 +24,8 @@ class AgencyController extends Controller
     {
         if(Auth::check())
         {
-            return view('agency');
+            $donations = Db::table('donation')->get();
+            return view('agency')->with('donations', $donations);
         }
         else
             return redirect('/login');
@@ -93,18 +94,22 @@ class AgencyController extends Controller
 
     public function alerts()
     {
-        if(count(Input::all()))
+        if(Auth::check())
         {
-            $message = Input::get('message');
-            $created = Carbon::now();
+            if(count(Input::all()))
+            {
+                $message = Input::get('message');
+                $created = Carbon::now();
 
-            DB::table('alerts')->insert(['message' => $message,
-                'created_at' => $created]);
+                DB::table('alerts')->insert(['message' => $message,
+                    'created_at' => $created]);
 
-            $errors = "Alert successfully added.";
-            return view('alerts')->with('errors', $errors);
+                $errors = "Alert successfully added.";
+                return view('alerts')->with('errors', $errors);
+            }
+            return view('alerts');
         }
-        return view('alerts');
+        else return redirect('/login');
     }
 
     public function logout()
