@@ -50,11 +50,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
+                    <li class="page-scroll">
                         <a href="/agency/home">Home</a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="active">
                         <a href="add_camp">Add Relief Camp</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="/alerts">Add Alerts</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/agency/logout">Logout</a>

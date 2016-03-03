@@ -60,7 +60,7 @@
                         <a href="/camps">Relief Camps</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="">Donate</a>
+                        <a href="/donate">Donate</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>
@@ -122,9 +122,9 @@
                                 <th><h3>Name</h3></th>
                                 <th><h3>Mobile</h3></th>
                                 <th><h3>Persons Stuck</h3></th>
-                                <th><h3>Message</h3></th>
                                 <th><h3>Address</h3></th>
                                 <th><h3>Location</h3></th>
+                                <th><h3>Message</h3></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -134,9 +134,9 @@
                                 <th>{!! $people->name !!}</th>
                                 <th>{!! $people->mobile !!}</th>
                                 <th>{!! $people->persons !!}</th>
-                                <th>{!! $people->message !!}</th>
                                 <th>{!! $people->address !!}</th>
                                 <th>{!! $people->latitude . ', ' . $people->longitude !!}</th>
+                                <th>{!! $people->message !!}</th>
                             </tr>
                             @endforeach
                             </table>

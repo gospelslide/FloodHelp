@@ -23,11 +23,16 @@ Route::post('/message', 'HelpController@message');
 Route::post('/details', 'HelpController@details');
 Route::get('/find', 'HelpController@find');
 Route::get('/weather', 'HelpController@weather');
+Route::get('/camps', 'HelpController@camps');
+Route::get('/donate', 'HelpController@donate');
 
 Route::get('/login', 'AgencyController@display');
 Route::post('/validate', 'AgencyController@validation');
-Route::get('/agency/home', 'AgencyController@index');
+Route::get('/agency_home', 'AgencyController@index');
 Route::get('/agency/logout', 'AgencyController@logout');
+Route::get('/add_camp', 'AgencyController@add');
+Route::post('/relief', 'AgencyController@addCamp');
+Route::get('/alerts', 'AgencyController@alerts');
 /* Help Me section routes */
 
 

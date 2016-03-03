@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
 use Auth;
 use DB;
 use Input;
@@ -88,6 +89,22 @@ class AgencyController extends Controller
         $errors = "Camp information successfully added";
 
         return view('add_camp')->with('errors', $errors);
+    }
+
+    public function alerts()
+    {
+        if(count(Input::all()))
+        {
+            $message = Input::get('message');
+            $created = Carbon::now();
+
+            DB::table('alerts')->insert(['message' => $message,
+                'created_at' => $created]);
+
+            $errors = "Alert successfully added.";
+            return view('alerts')->with('errors', $errors);
+        }
+        return view('alerts');
     }
 
     public function logout()

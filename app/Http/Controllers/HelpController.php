@@ -61,7 +61,23 @@ class HelpController extends Controller
         $contact['latitude'] = $latitude;
         $contact['longitude'] = $longitude;
 
+        $relief_camp = DB::table('camp')->get();
+        $contact['camps'] = $relief_camp;
+
         return view('helpme')->with('contact', $contact);
+    }
+
+    public function distance($lat1, $lon1, $lat2, $lon2) 
+    {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $distance = $miles*1.609344;
+
+        return $distance;
     }
 
     public function message()
@@ -85,9 +101,31 @@ class HelpController extends Controller
             $longitude = $response['results'][0]['geometry']['location']['lng'];
         }
 
+        $min = 10000;
+        $camps = DB::table('camp')->get();
+        foreach($camps as $camp)
+        {
+            $clat = $camp->latitude;
+            $clng = $camp->longitude;
+
+            $dist = $this->distance($clat, $clng, $latitude, $longitude);
+            if($dist<$min)
+            {
+                $min = $dist;
+                $nearest = $camp;
+            }
+        }
+
+        $messageCamp = "Nearby Relief Camp-";
+        $messageCamp .=  $camp->name . ',' . $camp->address . ', Helpline-' . 
+            $camp->helpline;
+
         DB::table('people_stuck')->insert(['name' => $name,'mobile' => $mobile,
             'address' => $address,
             'latitude' => $latitude,'longitude' => $longitude ]);
+
+        if(strlen($messageCamp)<140)
+            sendWay2SMS( SMS_NO, SMS_PASS, $mobile, $messageCamp);
 
         $radius = 1000;
 
@@ -109,14 +147,17 @@ class HelpController extends Controller
         $messageHosp = 'Nearby Hospital-';
         $messageHosp .= $hospitals['results'][0]['name'] . ',' . $hospitals['results'][0]['vicinity'];
 
-        $messagePol = 'Nearby Police Station-';
-        $messagePol .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
-
         if(strlen($messageHosp)<140)
             sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $messageHosp); 
 
+        $messagePol = 'Nearby Police Station-';
+        $messagePol .= $police['results'][0]['name'] . ',' . $police['results'][0]['vicinity'];
+
         if(strlen($messagePol)<140)
             sendWay2SMS ( SMS_NO , SMS_PASS , $mobile , $messagePol); 
+
+        //Nearest camp
+
 
         $errors = "Important contact information has been provided to the number";
         return view('locate')->with('errors', $errors);
@@ -225,5 +266,10 @@ class HelpController extends Controller
     {
         $camps = DB::table('camp')->get();
         return view('camps')->with('camps', $camps);
+    }
+
+    public function donate()
+    {
+        return view('donate');
     }
 }

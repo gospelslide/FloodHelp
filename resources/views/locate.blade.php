@@ -59,7 +59,7 @@
                         <a href="/camps">Relief Camps</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="">Donate</a>
+                        <a href="/donate">Donate</a>
                     </li>
                     <li class="page-scroll">
                         <a href="/weather">Weather</a>

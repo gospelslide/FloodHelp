@@ -51,22 +51,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="page-scroll">
-                        <a href="/locate">Help Me!</a>
+                        <a href="/agency/home">Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/find">Find People</a>
+                        <a href="/add_camp">Add Relief Camp</a>
+                    </li>
+                    <li class="active">
+                        <a href="/alerts">Add Alerts</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/camps">Relief Camps</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/donate">Donate</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/weather">Weather</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="/login">Agency</a>
+                        <a href="/agency/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -74,48 +68,43 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Header -->
-    <header>
+    <br>
+    <section id="contact">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="intro-text">
-                        <span class="name">Relief Camps</span>
-                    </div>
-                </div>
             </div>
-        </div>
-    </header>
-
-    <!-- About Section -->
-    <section>
-        <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <div class="container">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
-                            <thead>
-                            <tr>
-                                <th><h3>Name</h3></th>
-                                <th><h3>Organizer</h3></th>
-                                <th><h3>Address</h3></th>
-                                <th><h3>Helpline</h3></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            @foreach($camps as $camp)
-                            <tr>
-                                <th>{!! $camp->name !!}</th>
-                                <th>{!! $camp->organizer !!}</th>
-                                <th>{!! $camp->address !!}</th>
-                                <th>{!! $camp->helpline !!}</th>
-                            </tr>
-                            @endforeach
-                            </table>
-                        </div>
+                    @if(count($errors) > 0)
+                        <div class="alert alert-success">
+                        <ul>
+                            <li>{!! $errors !!}</li>
+                        </ul>
                     </div>
+                    @endif
+                    <h2>Add New Camp</h2>
+
+                    <hr class="star-primary">
+                    <br>
+                    <p>Add flood information and other updates.</p>
+                    <br>
+                    <form method="GET" action="/alerts">
+                        <input name="_token" type="hidden">{!! csrf_field() !!}
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Message</label>
+                                <input type="text" class="form-control" placeholder="Enter Message" id="name" required data-validation-required-message="Please enter a message." name="message" required>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Send</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
