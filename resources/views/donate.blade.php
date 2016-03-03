@@ -88,6 +88,26 @@
                         </ul>
                     </div>
                     @endif
+                    <h2>Fund FloodRelief Efforts</h2>
+                    <hr class="star-primary">
+                    <br>
+                    <form method="POST" action="/fund">
+                        <input name="_token" type="hidden">{!! csrf_field() !!}
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Donation Amount</label>
+                                <input type="text" class="form-control" placeholder="Amount" id="fund" required data-validation-required-message="Please enter Amount." name="fund" required>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Donate</button>
+                            </div>
+                        </div>
+                        <br>
+                        </form>
                     <h2>Donate Food or Clothing</h2>
                     <hr class="star-primary">
                     <br>
