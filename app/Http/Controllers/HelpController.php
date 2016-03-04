@@ -309,4 +309,10 @@ class HelpController extends Controller
     {
         return view('donate');
     }
+
+    public function fund()
+    {
+        $amt=Input::get('fund');
+        return view('fund')->with('fund',$amt);
+    }
 }
