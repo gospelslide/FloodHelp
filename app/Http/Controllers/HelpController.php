@@ -159,7 +159,6 @@ class HelpController extends Controller
 
             $response = file_get_contents($url);
             $police = json_decode($response, true);
-
             if(count($police['results']))
             {
                 $messagePol = 'Nearby Police Station-';

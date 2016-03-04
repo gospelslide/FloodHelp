@@ -91,24 +91,20 @@
                             <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th><h3>Name</h3></th>
-                                <th><h3>Mobile</h3></th>
-                                <th><h3>Persons Stuck</h3></th>
-                                <th><h3>Message</h3></th>
-                                <th><h3>Address</h3></th>
-                                <th><h3>Location</h3></th>
+                                <th><h3>Donor Name</h3></th>
+                                <th><h3>Donor Email</h3></th>
+                                <th><h3>Items</h3></th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                            @foreach($donations as $donation)
                             <tr>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3</th>
-                                <th>4</th>
-                                <th>5</th>
-                                <th>6</th>
+                                <th>{!! $donation->name !!}</th>
+                                <th>{!! $donation->email !!}</th>
+                                <th>{!! $donation->item !!}</th>
                             </tr>
+                            @endforeach
                             </table>
                         </div>
                     </div>
@@ -124,7 +120,7 @@
                 <div class="row">
                     <div class="footer-col col-md-4">
                         <h3>Location</h3>
-                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                        <p>Dwarkadas.J.Sanghvi College of Engineering, nVile Parle(W)-400 056</p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Around the Web</h3>
@@ -147,17 +143,17 @@
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>About Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                        <h3>About Us</h3>
+                        <p>We are non profit organization helping the community at the time of disasters.</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer-below">
+        <div class="footer-below">  
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Your Website 2014
+                        Developed by : UnholyAlliance,2016
                     </div>
                 </div>
             </div>

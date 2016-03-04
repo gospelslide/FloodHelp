@@ -1,7 +1,12 @@
+<HTML>
+<body>
 Hi {{ $data['name'] }},
 
-We have recieved your request for donation of {{ $data['items'] }}.
-Please check <a href="localhost:8000/camps">Relief Camps</a> to get info
-about the relief camps set up.
+<p>We have recieved your request for donation of {{ $data['items'] }}. We request you to donate at a relief camp nearest to you.
+Please check the below link to get info
+about the relief camps set up.<br><a href="/camps">Relief Camps</a></p>
 
-Thank You.
+<p>Thank You.
+</p>
+</body>
+</HTML>

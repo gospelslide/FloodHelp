@@ -35,21 +35,18 @@
       var data = <?php echo json_encode($contact['camps']); ?>;
       var userLat = <?php echo $contact['latitude']; ?>;
       var userLng = <?php echo $contact['longitude']; ?>;
-
       var mapProp1 = {
         center:new google.maps.LatLng(userLat,userLng),
         zoom:8,
         mapTypeId:google.maps.MapTypeId.ROADMAP
       };
       var map=new google.maps.Map(document.getElementById("googleMap"), mapProp1);
-
       var myLatLng = {lat: userLat, lng: userLng};
        var marker = new google.maps.Marker({
         position: myLatLng,
         map: map,
         icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
         title: 'You are here'});
-
       for(i=0;i<data.length;i++)
       { 
        var myLatLng = {lat: data[i]['latitude'], lng: data[i]['longitude']};
@@ -312,7 +309,7 @@
                 <div class="row">
                     <div class="footer-col col-md-4">
                         <h3>Location</h3>
-                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                        <p>Dwarkadas.J.Sanghvi College of Engineering, nVile Parle(W)-400 056</p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Around the Web</h3>
@@ -335,17 +332,17 @@
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>About Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                        <h3>About Us</h3>
+                        <p>We are non profit organization helping the community at the time of disasters.</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer-below">
+        <div class="footer-below">  
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Your Website 2014
+                        Developed by : UnholyAlliance,2016
                     </div>
                 </div>
             </div>
